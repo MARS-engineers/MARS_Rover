@@ -21,10 +21,12 @@ arduino-cli core update-index
 
 # Install Arduino AVR core
 arduino-cli core install arduino:avr
+arduino-cli core install rp2040:rp2040:generic
 
 # Compile all *.ino files for the Arduino Uno
 for f in **/*.ino ; do
-    arduino-cli compile -b arduino:avr:uno $f
+    # arduino-cli compile -b arduino:avr:uno $f
+    arduino-cli compile -b rp2040:rp2040:generic $f
 done
 
 
