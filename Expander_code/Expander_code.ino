@@ -10,9 +10,9 @@ void setup() {
 
   // Blink at start
   pinMode(EXP_LED, OUTPUT);
-  digitalWriteFast(EXP_LED, HIGH);
+  digitalWrite(EXP_LED, HIGH);
   delay(100);
-  digitalWriteFast(EXP_LED, LOW);
+  digitalWrite(EXP_LED, LOW);
 }
 
 void loop() {
