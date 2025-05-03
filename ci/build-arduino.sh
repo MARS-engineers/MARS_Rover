@@ -17,12 +17,12 @@ mkdir $HOME/Arduino/libraries
 export PATH=$PATH:$GITHUB_WORKSPACE/bin
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
 arduino-cli config init
-arduino-cli core update-index
+#arduino-cli core update-index
 arduino-cli  core update-index --additional-urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json
 
 # Install Arduino AVR core
 arduino-cli core install arduino:avr
-arduino-cli core install rp2040:rp2040:generic
+arduino-cli core install rp2040:rp2040
 
 # Compile all *.ino files for the Arduino Uno
 for f in **/*.ino ; do
