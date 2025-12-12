@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+materials
+
+sb_tools/
+GAL
+*.bkp
+Img
+HW
