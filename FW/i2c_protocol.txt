@@ -1,0 +1,173 @@
+i2c structure:
+
+
+0xXXZZYYQQ
+  |  | | `--	argument 2	(not used now)	= 00 
+  |  |  ----	argument 1	
+  |   ------	command subcommand
+   ---------	command type
+		 
+
+
+0xXX
+
+0x00	Nothing
+0x01	0xZZ	Ping
+	0x0F	Request
+	0xFF	Response
+		
+0x02 	Controll
+	0x01	Reset board
+
+0x03	0xZZ	System
+	0x01	Get FW version
+	0x02	Get HW version
+	0x03	Get board MEDI
+			
+	
+0x10	0xZZ	0xYY(speed 0-FF)	Motors basic controll
+	0x00	Disable motors
+	0x01	Enable Motors
+	0x11	0xYY	Run motor 1 Forward at speed
+	0x12	0xYY	Run motor 1 Backward at speed
+	0x21	0xYY	Run motor 2 Forward at speed
+	0x22	0xYY	Run motor 2 Backward at speed
+	0x31	0xYY	Run motor 3 Forward at speed
+	0x32	0xYY	Run motor 3 Backward at speed
+	0x41	0xYY	Run motor 4 Forward at speed
+	0x42	0xYY	Run motor 4 Backward at speed
+		
+	0xFF	0xYY	Run all Motors at speed
+	
+
+
+0x11ZZYY	Run motor ZZ at speed YY
+     |  \----	Speed (-127 - 127)
+      ------	Motor
+      		0x00	R1
+      		0x01	R2
+      		0x02	L1
+      		0x03	L2
+
+
+
+0x12XXXXXXXX	Set motors speed
+    |  | | `--	R1	Speed (-127 - 127)
+    |  |  ----	R2	Speed (-127 - 127)
+    |   ------	L1	Speed (-127 - 127)
+     ---------	L2	Speed (-127 - 127)
+
+
+
+0x13	0xZZ	0xYY(distance 0-ff)	Motor advance
+	0x00	Clear all distances
+	0x01	
+
+// In current version motors are divided in to two pairs pair A = motors 1,2	B = motor 3,4, current sensing and settings are shared for each pair
+
+0x12	0xZZ	0xYY	Motor info	// Get info about motor YY (current, current speed, drive distance, current rotation)
+	0x00	Clear all stats
+	
+	0x01	0xYY	0xQQ	Get current from motor YY
+		0x00	Clear current stats
+		0x01	Motor 1
+		0x02	Motor 2
+		0x03	Motor 3
+		0x04	Motor 4
+		
+	0x02	0xYY	0xQQ	Get info about motor YY
+		0x00	Clear info
+		0x01	Motor 1
+		0x02	Motor 2
+		0x03	Motor 3
+		0x04	Motor 4
+		
+	0x03	0xYY	0xQQ	Get step count from motor YY
+		0x00	Clear step count
+		0x01	Motor 1
+		0x02	Motor 2
+		0x03	Motor 3
+		0x04	Motor 4
+		
+	0x10	0xYY	0xQQ	Set current QQ treshold for motor YY	
+	0x20	0xYY	0xQQ	Set max speed QQ for motor YY
+	0x21	0xYY	0xQQ	Set min speed QQ for motor YY
+	
+0x20	0xZZ	0xYY(speed 0-FF)	Car basic conroll
+
+	0x00	STOP
+	0x01	FORWARD
+	0x02	BACKWARD
+	0x03	LEFT_SLIDE
+	0x04	RIGHT_SLIDE
+	0x05	ROTATE_CLOCKWISE
+	0x06	ROTATE_COUNTER_CLOCKWISE
+	0x07	TURN_LEFT_F
+	0x08	TURN_RIGHT_F
+	0x09	TURN_LEFT_B
+	0x0A	TURN_RIGHT_B
+	0x0B	ROT_POINT_LEFT_F
+	0x0C	ROT_POINT_RIGHT_F
+	0x0D	ROT_POINT_LEFT_B
+	0x0E	ROT_POINT_RIGHT_B
+	0x0F	SLIDE_DIAG_LEFT_F
+	0x10	SLIDE_DIAG_RIGHT_F
+	0x11	SLIDE_DIAG_LEFT_B
+	0x12	SLIDE_DIAG_RIGHT_B
+
+
+
+0x21ZZYY	Run car in direction at speed YY
+     |  \----	Speed (-127 - 127)
+      ------	Direction
+      		0x00	Forward
+      		0x01	Slide
+      		0x02	Turn_round
+      		0x03	Turn_rear
+      		0x04	Turn_front
+      		0x05	Diagonal_left
+      		0x06	Diagonal_right
+
+0x22	Car advance
+
+0x23ZZYY	Run car motor 1 and 2 at speed ZZ and motor 3 and 4 at speed YY 
+     |  \----	Speed1,2 (-127 - 127)
+      ------	Speed3,4 (-127 - 127)
+
+
+
+	
+0x31ZZYY	Run car in direction at speed YY
+     |  \----	Speed (-127 - 127)
+      ------	Direction
+      		STOP = 0x00,
+      		FORWARD = 0x01,
+      		BACKWARD = 0x02,
+      		SLIDE_RIGHT = 0x03,
+      		SLIDE_LEFT = 0x04,
+      		DIAG_FWD_LEFT = 0x05,
+      		DIAG_FWD_RIGHT = 0x06,
+      		DIAG_BACK_LEFT = 0x07,
+      		DIAG_BACK_RIGHT = 0x08,
+      		ROTATE_LEFT = 0x09,
+      		ROTATE_RIGHT = 0x0A
+
+
+
+0x32	Car advance
+
+	
+0xA0	0xZZ	Run Test(ZZ)
+0xA1	0xZZ	0xYY	test settings(ZZ) chage by (YY)
+
+	
+	
+/* Examples
+	
+0x10000000	Disable motors
+0x10010000	Enable motors
+0x2001AA00	Motor basic FORWARD speed AA
+0x20000000	Motor basic STOP
+
+
+*/
